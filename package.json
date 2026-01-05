@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
+    "client-install": "npm install --prefix client",
+    "server-install": "npm install --prefix server",
+    "build": "npm run client-install && npm run build --prefix client && npm run server-install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

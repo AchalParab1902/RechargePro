@@ -32,10 +32,22 @@ app.use('/api/recharge', require('./routes/rechargePaymentRoutes')); // Direct p
 app.use('/api/wallet', walletRoutes);
 app.use('/api/payment', require('./routes/paymentRoutes'));
 
-// Basic Route
-app.get('/', (req, res) => {
-    res.send('API is running...');
-});
+// Serve Frontend in Production
+if (process.env.NODE_ENV === 'production') {
+    const path = require('path');
+    const clientBuildPath = path.join(__dirname, '../client/dist');
+    
+    app.use(express.static(clientBuildPath));
+    
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(clientBuildPath, 'index.html'));
+    });
+} else {
+    // Basic Route for Dev
+    app.get('/', (req, res) => {
+        res.send('API is running...');
+    });
+}
 
 // Error Handling Middleware
 app.use(notFound);

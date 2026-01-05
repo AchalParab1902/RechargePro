@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://rechargepro-backend-wf90.onrender.com/api',
+  baseURL: import.meta.env.PROD ? '/api' : 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
