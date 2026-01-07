@@ -11,6 +11,12 @@ const api = axios.create({
   },
 });
 
+console.log('--- AXIOS DEBUG ---');
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+console.log('PROD:', import.meta.env.PROD);
+console.log('Resolved baseURL:', api.defaults.baseURL);
+console.log('-------------------');
+
 // Add a request interceptor to include the JWT token
 api.interceptors.request.use(
   (config) => {
@@ -18,6 +24,8 @@ api.interceptors.request.use(
     if (userInfo && userInfo.token) {
       config.headers.Authorization = `Bearer ${userInfo.token}`;
     }
+    // Debug log for every request
+    console.log(`[Request] ${config.method.toUpperCase()} ${config.url}`, { baseURL: config.baseURL });
     return config;
   },
   (error) => {
